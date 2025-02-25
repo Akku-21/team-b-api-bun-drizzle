@@ -30,11 +30,13 @@ const personalDataSchema = new mongoose.Schema({
   firstName: String,
   lastName: { 
     type: String, 
-    required: true,
-    validate: {
-      validator: (v: string) => v && v.trim().length > 0,
+    required: [true, 'lastName is required'],
+    validate: [{
+      validator: function(v: string) {
+        return v && v.trim().length > 0;
+      },
       message: 'lastName cannot be empty'
-    }
+    }]
   },
   street: String,
   houseNumber: String,

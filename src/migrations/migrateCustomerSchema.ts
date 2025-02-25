@@ -8,26 +8,40 @@ async function migrateCustomerSchema() {
     const customers = await Customer.find({});
     
     for (const customer of customers) {
-      // Get the old data structure
       const oldData = customer.toObject();
+      const formData = oldData.formData || {};
       
       // Transform insurance wishes to insurance info
       const insuranceInfo = {
-        startDate: oldData.formData.insuranceWishes?.insuranceStart || '',
-        previousInsurance: '',  // New field
-        previousInsuranceNumber: ''  // New field
+        startDate: formData.insuranceWishes?.insuranceStart || '',
+        previousInsurance: '',
+        previousInsuranceNumber: ''
       };
       
-      // Transform personal data
+      // Transform personal data with proper lastName handling
+      let lastName = formData.personalData?.lastName || '';
+      
+      // If lastName is empty, try to get it from driverInfo name
+      if (!lastName.trim() && formData.driverInfo?.name) {
+        const nameParts = formData.driverInfo.name.split(' ');
+        if (nameParts.length > 1) {
+          lastName = nameParts.slice(1).join(' ');
+        }
+      }
+      
+      // If still empty, use 'Unknown'
+      if (!lastName.trim()) {
+        lastName = 'Unknown';
+      }
+
       const personalData = {
-        email: oldData.formData.personalData?.email || '',
-        firstName: oldData.formData.personalData?.firstName || '',
-        lastName: oldData.formData.personalData?.lastName || 
-                 (oldData.formData.driverInfo?.name || '').split(' ').slice(1).join(' ') || 'Unknown', // Default to 'Unknown' instead of empty string
-        street: oldData.formData.personalData?.street || '',
-        houseNumber: oldData.formData.personalData?.houseNumber || '',
-        postalCode: oldData.formData.personalData?.postalCode || '',
-        city: oldData.formData.personalData?.city || ''
+        email: formData.personalData?.email || '',
+        firstName: formData.personalData?.firstName || '',
+        lastName,
+        street: formData.personalData?.street || '',
+        houseNumber: formData.personalData?.houseNumber || '',
+        postalCode: formData.personalData?.postalCode || '',
+        city: formData.personalData?.city || ''
       };
 
       // Update the document
