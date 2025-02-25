@@ -14,22 +14,21 @@ const vehicleDataSchema = new mongoose.Schema({
 });
 
 const driverInfoSchema = new mongoose.Schema({
-  name: String,
   dob: String,
   licenseNumber: String,
   maritalStatus: String
 });
 
-const insuranceWishesSchema = new mongoose.Schema({
-  coverageType: String,
-  deductible: Number,
-  insuranceStart: String
+const insuranceInfoSchema = new mongoose.Schema({
+  startDate: String,
+  previousInsurance: String,
+  previousInsuranceNumber: String
 });
 
 const personalDataSchema = new mongoose.Schema({
   email: String,
-  phone: String,
-  address: String,
+  firstName: String,
+  lastName: String,
   street: String,
   houseNumber: String,
   postalCode: String,
@@ -41,11 +40,11 @@ const paymentInfoSchema = new mongoose.Schema({
 });
 
 const customerSchema = new mongoose.Schema({
-  customerId: { type: String, required: true, unique: true , default:() => randomUUID() },
+  customerId: { type: String, required: true, unique: true, default: () => randomUUID() },
   formData: {
     vehicleData: vehicleDataSchema,
     driverInfo: driverInfoSchema,
-    insuranceWishes: insuranceWishesSchema,
+    insuranceInfo: insuranceInfoSchema,
     personalData: personalDataSchema,
     paymentInfo: paymentInfoSchema,
     guid: String

@@ -3,7 +3,8 @@
   "version": "1.0.50",
   "scripts": {
     "dev": "bun run --watch src/index.ts",
-    "start": "bun run src/index.ts"
+    "start": "bun run src/index.ts",
+    "migrate": "bun run src/migrations/migrateCustomerSchema.ts"
   },
   "dependencies": {
     "@elysiajs/cors": "^1.2.0",

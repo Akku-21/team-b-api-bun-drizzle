@@ -14,20 +14,19 @@ interface CustomerFormData {
     currentMileage: string;
   };
   driverInfo: {
-    name: string;
     dob: string;
     licenseNumber: string;
     maritalStatus: string;
   };
-  insuranceWishes: {
-    coverageType: string;
-    deductible: number;
-    insuranceStart: string;
+  insuranceInfo: {
+    startDate: string;
+    previousInsurance: string;
+    previousInsuranceNumber: string;
   };
   personalData: {
     email: string;
-    phone: string;
-    address: string;
+    firstName: string;
+    lastName: string;
     street: string;
     houseNumber: string;
     postalCode: string;
@@ -50,48 +49,47 @@ interface CustomerData {
 
 export class CustomerService {
   private transformMongooseDoc(doc: any): CustomerData {
-      const obj = doc.toObject();
-      return {
-        customerId: obj.customerId,
-        formData: {
-          vehicleData: {
-            make: obj.formData.vehicleData.make,
-            model: obj.formData.vehicleData.model,
-            year: obj.formData.vehicleData.year,
-            vin: obj.formData.vehicleData.vin,
-            hsnTsn: obj.formData.vehicleData.hsnTsn,
-            licensePlate: obj.formData.vehicleData.licensePlate,
-            firstRegistration: obj.formData.vehicleData.firstRegistration,
-            firstRegistrationOwner: obj.formData.vehicleData.firstRegistrationOwner,
-            currentMileage: obj.formData.vehicleData.currentMileage
-          },
-          driverInfo: {
-            name: obj.formData.driverInfo.name,
-            dob: obj.formData.driverInfo.dob,
-            licenseNumber: obj.formData.driverInfo.licenseNumber,
-            maritalStatus: obj.formData.driverInfo.maritalStatus
-          },
-          insuranceWishes: {
-            coverageType: obj.formData.insuranceWishes.coverageType,
-            deductible: obj.formData.insuranceWishes.deductible,
-            insuranceStart: obj.formData.insuranceWishes.insuranceStart
-          },
-          personalData: {
-            email: obj.formData.personalData.email,
-            phone: obj.formData.personalData.phone,
-            address: obj.formData.personalData.address,
-            street: obj.formData.personalData.street,
-            houseNumber: obj.formData.personalData.houseNumber,
-            postalCode: obj.formData.personalData.postalCode,
-            city: obj.formData.personalData.city
-          },
-          paymentInfo: {
-            iban: obj.formData.paymentInfo.iban
-          },
-          guid: obj.formData.guid
-        }
-      };
-    }
+    const obj = doc.toObject();
+    return {
+      customerId: obj.customerId,
+      formData: {
+        vehicleData: {
+          make: obj.formData.vehicleData.make,
+          model: obj.formData.vehicleData.model,
+          year: obj.formData.vehicleData.year,
+          vin: obj.formData.vehicleData.vin,
+          hsnTsn: obj.formData.vehicleData.hsnTsn,
+          licensePlate: obj.formData.vehicleData.licensePlate,
+          firstRegistration: obj.formData.vehicleData.firstRegistration,
+          firstRegistrationOwner: obj.formData.vehicleData.firstRegistrationOwner,
+          currentMileage: obj.formData.vehicleData.currentMileage
+        },
+        driverInfo: {
+          dob: obj.formData.driverInfo.dob,
+          licenseNumber: obj.formData.driverInfo.licenseNumber,
+          maritalStatus: obj.formData.driverInfo.maritalStatus
+        },
+        insuranceInfo: {
+          startDate: obj.formData.insuranceInfo.startDate,
+          previousInsurance: obj.formData.insuranceInfo.previousInsurance,
+          previousInsuranceNumber: obj.formData.insuranceInfo.previousInsuranceNumber
+        },
+        personalData: {
+          email: obj.formData.personalData.email,
+          firstName: obj.formData.personalData.firstName,
+          lastName: obj.formData.personalData.lastName,
+          street: obj.formData.personalData.street,
+          houseNumber: obj.formData.personalData.houseNumber,
+          postalCode: obj.formData.personalData.postalCode,
+          city: obj.formData.personalData.city
+        },
+        paymentInfo: {
+          iban: obj.formData.paymentInfo.iban
+        },
+        guid: obj.formData.guid
+      }
+    };
+  }
 
   async createCustomer(customerData: CreateCustomerData) {
     try {

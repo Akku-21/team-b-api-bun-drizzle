@@ -14,22 +14,21 @@ export const vehicleDataSchema = t.Object({
 })
 
 export const driverInfoSchema = t.Object({
-  name: t.String(),
   dob: t.String(),
   licenseNumber: t.String(),
   maritalStatus: t.String()
 })
 
-export const insuranceWishesSchema = t.Object({
-  coverageType: t.String(),
-  deductible: t.Number(),
-  insuranceStart: t.String()
+export const insuranceInfoSchema = t.Object({
+  startDate: t.String(),
+  previousInsurance: t.String(),
+  previousInsuranceNumber: t.String()
 })
 
 export const personalDataSchema = t.Object({
   email: t.String(),
-  phone: t.String(),
-  address: t.String(),
+  firstName: t.String(),
+  lastName: t.String(),
   street: t.String(),
   houseNumber: t.String(),
   postalCode: t.String(),
@@ -43,7 +42,7 @@ export const paymentInfoSchema = t.Object({
 export const formDataSchema = t.Object({
   vehicleData: vehicleDataSchema,
   driverInfo: driverInfoSchema,
-  insuranceWishes: insuranceWishesSchema,
+  insuranceInfo: insuranceInfoSchema,
   personalData: personalDataSchema,
   paymentInfo: paymentInfoSchema,
   guid: t.String()
