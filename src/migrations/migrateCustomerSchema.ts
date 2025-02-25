@@ -21,10 +21,9 @@ async function migrateCustomerSchema() {
       // Transform personal data
       const personalData = {
         email: oldData.formData.personalData?.email || '',
-        firstName: oldData.formData.personalData?.firstName || 
-                  (oldData.formData.driverInfo?.name || '').split(' ')[0] || '',  // Try to split name if exists
+        firstName: oldData.formData.personalData?.firstName || '',
         lastName: oldData.formData.personalData?.lastName || 
-                 (oldData.formData.driverInfo?.name || '').split(' ').slice(1).join(' ') || '',
+                 (oldData.formData.driverInfo?.name || '').split(' ').slice(1).join(' ') || 'Unknown', // Default to 'Unknown' instead of empty string
         street: oldData.formData.personalData?.street || '',
         houseNumber: oldData.formData.personalData?.houseNumber || '',
         postalCode: oldData.formData.personalData?.postalCode || '',

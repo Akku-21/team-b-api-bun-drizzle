@@ -28,7 +28,10 @@ export const insuranceInfoSchema = t.Object({
 export const personalDataSchema = t.Object({
   email: t.String(),
   firstName: t.String(),
-  lastName: t.String({ required: true }),
+  lastName: t.String({ 
+    required: true,
+    minLength: 1 // Ensure at least 1 character
+  }),
   street: t.String(),
   houseNumber: t.String(),
   postalCode: t.String(),

@@ -28,7 +28,14 @@ const insuranceInfoSchema = new mongoose.Schema({
 const personalDataSchema = new mongoose.Schema({
   email: String,
   firstName: String,
-  lastName: String,
+  lastName: { 
+    type: String, 
+    required: true,
+    validate: {
+      validator: (v: string) => v && v.trim().length > 0,
+      message: 'lastName cannot be empty'
+    }
+  },
   street: String,
   houseNumber: String,
   postalCode: String,
