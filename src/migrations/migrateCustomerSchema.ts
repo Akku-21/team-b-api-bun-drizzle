@@ -50,7 +50,8 @@ async function migrateCustomerSchema() {
         {
           $set: {
             'formData.insuranceInfo': insuranceInfo,
-            'formData.personalData': personalData
+            'formData.personalData': personalData,
+            'formData.editedByCustomer': false
           },
           $unset: {
             'formData.insuranceWishes': 1,

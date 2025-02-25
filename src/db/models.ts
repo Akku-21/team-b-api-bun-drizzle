@@ -56,7 +56,8 @@ const customerSchema = new mongoose.Schema({
     insuranceInfo: insuranceInfoSchema,
     personalData: personalDataSchema,
     paymentInfo: paymentInfoSchema,
-    guid: String
+    guid: String,
+    editedByCustomer: { type: Boolean, default: false }
   }
 });
 

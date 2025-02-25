@@ -48,7 +48,8 @@ export const formDataSchema = t.Object({
   insuranceInfo: insuranceInfoSchema,
   personalData: personalDataSchema,
   paymentInfo: paymentInfoSchema,
-  guid: t.String()
+  guid: t.String(),
+  editedByCustomer: t.Boolean({ default: false })
 })
 
 export const createCustomerDataSchema = t.Object({

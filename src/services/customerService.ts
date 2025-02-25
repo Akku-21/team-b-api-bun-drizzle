@@ -36,6 +36,7 @@ interface CustomerFormData {
     iban: string;
   };
   guid: string;
+  editedByCustomer: boolean;
 }
 
 interface CreateCustomerData {
@@ -86,7 +87,8 @@ export class CustomerService {
         paymentInfo: {
           iban: obj.formData.paymentInfo.iban
         },
-        guid: obj.formData.guid
+        guid: obj.formData.guid,
+        editedByCustomer: obj.formData.editedByCustomer || false
       }
     };
   }
