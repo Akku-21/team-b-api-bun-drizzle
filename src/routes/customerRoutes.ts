@@ -5,7 +5,7 @@ import { NotFoundError } from '../errors/errors'
 
 const customerService = new CustomerService()
 
-export const customerRoutes = new Elysia({ prefix: '/api/customers' })
+export const customerRoutes = new Elysia({ prefix: '/customers' })
   .post('/', async ({ body, set }) => {
     try {
       const result = await customerService.createCustomer(body)
