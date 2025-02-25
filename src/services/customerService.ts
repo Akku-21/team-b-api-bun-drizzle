@@ -145,4 +145,33 @@ export class CustomerService {
       throw new DatabaseError(error instanceof Error ? error.message : 'Error deleting customer');
     }
   }
+
+  async updateCustomer(customerId: string, customerData: CreateCustomerData) {
+    try {
+      const customer = await Customer.findOne({ customerId });
+      if (!customer) {
+        throw new NotFoundError('Customer not found');
+      }
+
+      const updatedCustomer = await Customer.findOneAndUpdate(
+        { customerId },
+        customerData,
+        { new: true, runValidators: true }
+      );
+
+      if (!updatedCustomer) {
+        throw new NotFoundError('Customer not found');
+      }
+
+      return {
+        success: true as const,
+        data: this.transformMongooseDoc(updatedCustomer)
+      };
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        throw error;
+      }
+      throw new DatabaseError(error instanceof Error ? error.message : 'Error updating customer');
+    }
+  }
 }

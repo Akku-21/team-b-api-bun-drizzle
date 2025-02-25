@@ -73,3 +73,22 @@ export const customerRoutes = new Elysia({ prefix: '/customers' })
     }),
     response: t.Union([successResponse, errorResponse])
   })
+  .put('/:customerId', async ({ params: { customerId }, body, set }) => {
+    try {
+      const result = await customerService.updateCustomer(customerId, body);
+      set.status = 200;
+      return result;
+    } catch (error) {
+      set.status = error instanceof NotFoundError ? 404 : 500;
+      return {
+        success: false as const,
+        message: error instanceof Error ? error.message : 'Internal server error'
+      };
+    }
+  }, {
+    params: t.Object({
+      customerId: t.String()
+    }),
+    body: createCustomerDataSchema,
+    response: t.Union([customerDataResponse, errorResponse])
+  })
